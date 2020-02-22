@@ -5,8 +5,11 @@
   become_method: sudo 
   ignore_errors: true 
   tasks: Install Packages for Wordpress
-    - name: name of packages for wordpress
+    - name: Task name Here
+      ping: 
+    - name:
       package:
+        name: 
         - epel-release
         - wget
         - unzip
