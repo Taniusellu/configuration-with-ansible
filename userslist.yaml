@@ -1,0 +1,8 @@
+---
+- name: add  users
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  tasks:
+
+  
