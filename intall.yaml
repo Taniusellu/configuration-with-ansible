@@ -12,10 +12,9 @@
       package: 
         name: #name of the package
           - telnet
-          - elkins
+          - elinks
           - wget
           - unzip
         state: present #
         #latest #if the package doesnt exist it will install latest version, or it can update for you
         #state: present , absent, restarted, stopped, started 
-        
