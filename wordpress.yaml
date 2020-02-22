@@ -1,21 +1,19 @@
 ---
-- name: Install  wordpress
+- name: Installs wordpress
   hosts: all
-  become: true
-  become_method: sudo 
-  ignore_errors: true 
-  tasks: Install Packages for Wordpress
-    - name: Task name Here
-      ping: 
-    - name:
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install necessary packages
       package:
-        name: 
-        - epel-release
-        - wget
-        - unzip
-        - mariadb-server
-        - httpd
-      state: present
+        name: "{{item}}"
+        state: present
+      with_items:
+       - epel-release
+       - wget 
+       - unzip
+       - mariadb-server
+      ignore_errors: true
 
 
     - name: download wordpress
