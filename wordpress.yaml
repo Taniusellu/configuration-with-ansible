@@ -1,6 +1,6 @@
 ---
 - name: Install  wordpress
-  hosts: localhost 
+  hosts: all
   become: true
   become_method: sudo 
   ignore_errors: true 
