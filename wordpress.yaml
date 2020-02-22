@@ -15,7 +15,6 @@
       state: present
 
 
-
     - name: download wordpress
       get_url: 
         url: https://wordpress.org/latest.tar.gz
