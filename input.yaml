@@ -9,4 +9,4 @@
     - name: take input
       package: 
         name: "{{package}}"
-        state: latest
+        state: latest   
