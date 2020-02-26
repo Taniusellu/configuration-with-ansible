@@ -1,5 +1,5 @@
 ---
-- name: Installs wordpress
+- name: Install wordpress
   hosts: all
   become: yes
   become_method: sudo
