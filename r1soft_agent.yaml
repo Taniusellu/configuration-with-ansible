@@ -4,8 +4,8 @@
   become: yes
   become_method: sudo
   tasks:
-    
-    - name: Creates a repo
+
+    - name: Created a repository
       copy: r1soft.repo
       dest: /etc/yum.repos.d/r1soft.repo
 
