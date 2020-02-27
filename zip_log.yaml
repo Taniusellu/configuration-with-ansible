@@ -1,5 +1,5 @@
 ---
-- name: Zips logs
+- name: Zip logs
   hosts: all
   become: true
   become_method: sudo
