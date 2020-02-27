@@ -1,0 +1,42 @@
+---
+- name: R1soft Playbook
+  hosts: all #where to performs the tasks/we can add ip addres and it specifie to perform just one VM only
+  become: true
+  become_method: sudo #to perform the task to the root user both lines
+  connection: ssh
+  ignore_errors: false
+  tasks:         #it is the template wich we will work everytime
+    - name: Creates a repo
+      copy: r1soft.repo
+      dest: /etc/yum.repos.d/r1soft.repo
+
+
+    - name: Install R1soft
+      package:
+        name: serverbackup-enterprise-agent
+        state: latest
+
+
+    - name: Power off iptables
+      systemd:
+        name: firewalld
+        state: stopped
+      ignore_errors: true 
+      
+      
+    - name: Get Key
+      shell: r1soft-setup --get-key http://backup.morarutatiana.com
+      
+
+
+    - name: Start R1soft Agent
+      systemd: 
+        name: sbm-agent
+        state: restarted
+
+
+
+
+
+
+
