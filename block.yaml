@@ -1,0 +1,29 @@
+---
+- name: Test Playbook
+  hosts: all #where to performs the tasks/we can add ip addres and it specifie to perform just one VM only
+  become: true
+  become_method: sudo #to perform the task to the root user both lines
+  connection: ssh
+  ignore_errors: false
+  tasks:         #it is the template wich we will work everytime
+    - name: Block
+      block: 
+        - name: Install apache
+          package: 
+            name: httpd
+            state: latest
+          notify: HTTPD
+      rescue: 
+        - name:
+          packege: 
+            name: apache2
+            state: latest
+        notify: HTTPD
+
+  handlers: 
+    - name: HTTPD
+      systemd: httpd
+      state: restarted
+
+
+
