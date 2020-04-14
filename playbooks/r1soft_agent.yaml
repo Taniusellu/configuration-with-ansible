@@ -1,44 +1,37 @@
 ---
-- name: Install r1soft agent
+- name: R1soft Agent Installation
   hosts: all
-  become: yes
+  become: true
   become_method: sudo
+  user: centos
   tasks:
-
-    - name: Created a repository
-      copy: r1soft.repo
-      dest: /etc/yum.repos.d/r1soft.repo
-
-
-    - name: Install R1soft
-      package:
-        name: serverbackup-enterprise-agent
-        state: latest
-      notify: R1soft RESTART
-
-
-    - name: Power off iptables
-      systemd:
-        name: firewalld
-        state: stopped
-      ignore_errors: true 
-      
-      
-    - name: Get Key
-      shell: r1soft-setup --get-key http://backup.morarutatiana.com
-      
-
-
+  - name: Create repo
+    copy:
+      src: r1soft.repo
+      dest: /etc/yum.repos.d/
+  - name: Install agent
+    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "6")
+    package:
+      name: serverbackup-enterprise-agent
+      state: installed
+    notify: AGENT_RESTART
+  # - name: Start agent
+  #   service:
+  #     name: cdp-agent
+  #     state: restarted
+  #     enabled: true
+  - name: Stop iptables
+    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "6")
+    service:
+      name: iptables
+      state: stopped
+      enabled: false
+  - name: Get Key
+    when: (ansible_distribution == "CentOS" and ansible_distribution_major_version == "6")
+    shell: "r1soft-setup --get-key http://3.8.137.216/"
   handlers:
-    - name: R1soft RESTART
-      systemd:
-        name: sbm-agent
-        state: restarted
-        enabled: yes
-
-
-
-
-
-
-
+    name: AGENT_RESTART
+    service:
+      name: cdp-agent
+      state: restarted
+      enabled: true
